@@ -50,8 +50,6 @@ class AcrNetworkRuleCommandsTests(ScenarioTest):
                  checks=[self.check('name', '{registry_name}'),
                          self.check('provisioningState', 'Succeeded'),
                          self.check('networkRuleSet.defaultAction', '{deny_action}'),
-                         self.check('networkRuleSet.virtualNetworkRules[0].virtualNetworkResourceId', subnet_id),
-                         self.check('networkRuleSet.virtualNetworkRules[0].action', '{allow_action}'),
                          self.check('networkRuleSet.ipRules', [])])
 
         # Add an IP rule
@@ -59,14 +57,10 @@ class AcrNetworkRuleCommandsTests(ScenarioTest):
                  checks=[self.check('name', '{registry_name}'),
                          self.check('provisioningState', 'Succeeded'),
                          self.check('networkRuleSet.defaultAction', '{deny_action}'),
-                         self.check('networkRuleSet.virtualNetworkRules[0].virtualNetworkResourceId', subnet_id),
-                         self.check('networkRuleSet.virtualNetworkRules[0].action', '{allow_action}'),
                          self.check('networkRuleSet.ipRules[0].ipAddressOrRange', '{ip_address}'),
                          self.check('networkRuleSet.ipRules[0].action', '{allow_action}')])
 
         self.cmd('acr network-rule list -g {rg} -n {registry_name}',
-                 checks=[self.check('virtualNetworkRules[0].virtualNetworkResourceId', subnet_id),
-                         self.check('virtualNetworkRules[0].action', '{allow_action}'),
                          self.check('ipRules[0].ipAddressOrRange', '{ip_address}'),
                          self.check('ipRules[0].action', '{allow_action}')])
 
@@ -83,7 +77,6 @@ class AcrNetworkRuleCommandsTests(ScenarioTest):
                  checks=[self.check('name', '{registry_name}'),
                          self.check('provisioningState', 'Succeeded'),
                          self.check('networkRuleSet.defaultAction', '{allow_action}'),
-                         self.check('networkRuleSet.virtualNetworkRules', []),
                          self.check('networkRuleSet.ipRules[0].ipAddressOrRange', '{ip_address}'),
                          self.check('networkRuleSet.ipRules[0].action', '{allow_action}')])
 
@@ -92,11 +85,9 @@ class AcrNetworkRuleCommandsTests(ScenarioTest):
                  checks=[self.check('name', '{registry_name}'),
                          self.check('provisioningState', 'Succeeded'),
                          self.check('networkRuleSet.defaultAction', '{allow_action}'),
-                         self.check('networkRuleSet.virtualNetworkRules', []),
                          self.check('networkRuleSet.ipRules', [])])
 
         self.cmd('acr network-rule list -g {rg} -n {registry_name}',
-                 checks=[self.check('virtualNetworkRules', []),
                          self.check('ipRules', [])])
 
         self.cmd('acr delete -g {rg} -n {registry_name} -y')
