@@ -36,7 +36,7 @@ def cf_acr_cred_sets(cli_ctx, *_):
 
 
 def cf_acr_network_rules(cli_ctx, *_):
-    return get_acr_service_client(cli_ctx, api_version=VERSION_2021_08_01_PREVIEW).registries
+    return get_acr_service_client(cli_ctx, api_version=VERSION_2025_03_01_PREVIEW).registries
 
 
 def cf_acr_registries_tasks(cli_ctx, *_):
